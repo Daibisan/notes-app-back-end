@@ -1,0 +1,168 @@
+Kriteria 1 - Web Server dapat menyimpan catatan
+
+//1.1 Bentuk Data//
+[
+{
+ id: string,
+ title: string,
+ createdAt: string,
+ updatedAt: string,
+ tags: array of string,
+ body: string,
+},
+{
+ id: 'notes-V1StGXR8_Z5jdHi6B-myT',
+ title: 'Sejarah JavaScript',
+ createdAt: '2020-12-23T23:00:09.686Z',
+ updatedAt: '2020-12-23T23:00:09.686Z',
+ tags: ['NodeJS', 'JavaScript'],
+ body: 'JavaScript pertama kali dikembangkan oleh Brendan Eich dari Netscape di bawah nama Mocha, yang nantinya namanya diganti menjadi LiveScript, dan akhirnya menjadi JavaScript. Navigator sebelumnya telah mendukung Java untuk lebih bisa dimanfaatkan para pemrogram yang non-Java.',
+},
+]
+
+//1.2 Bentuk Request//
+method: POST,
+path: /notes
+{
+ "title": "Judul Catatan",
+ "tags": ["Tag 1", "Tag 2"],
+ "body": "Konten catatan"
+}
+
+//1.3 Bentuk Response//
+berhasil,
+kode: 201 created
+{
+  "status": "success",
+  "message": "Catatan berhasil ditambahkan",
+  "data": {
+    "noteId": "V09YExygSUYogwWJ"
+  }
+}
+gagal,
+kode: 500 bad request
+{
+  "status": "error",
+  "message": "Catatan gagal untuk ditambahkan"
+}
+
+
+
+Kriteria 2 - Web Server dapat menampilkan catatan
+
+//2.1//
+req ->
+method: get,
+path: /notes,
+
+res ->
+- berhasil,
+code: 200 ok,
+{
+  "status": "success",
+  "data": {
+    "notes": [
+      {
+        "id":"notes-V1StGXR8_Z5jdHi6B-myT",
+        "title":"Catatan 1",
+        "createdAt":"2020-12-23T23:00:09.686Z",
+        "updatedAt":"2020-12-23T23:00:09.686Z",
+        "tags":[
+          "Tag 1",
+          "Tag 2"
+        ],
+        "body":"Isi dari catatan 1"
+      },
+      {
+        "id":"notes-V1StGXR8_98apmLk3mm1",
+        "title":"Catatan 2",
+        "createdAt":"2020-12-23T23:00:09.686Z",
+        "updatedAt":"2020-12-23T23:00:09.686Z",
+        "tags":[
+          "Tag 1",
+          "Tag 2"
+        ],
+        "body":"Isi dari catatan 2"
+      }
+    ]
+  }
+}
+- gagal,
+code: 404 not found,
+{
+  "status": "success",
+  "data": {
+    "notes": []
+  }
+}
+
+//2.2//
+req ->
+method: GET,
+path: /notes/{id}
+
+res ->
+- berhasil,
+code: 200 ok,
+{
+  status: 'success',
+  data: {
+    note: {note}
+  }
+}
+- gagal,
+code: 404 not found
+{
+  "status": "fail",
+  "message": "Catatan tidak ditemukan"
+}
+
+Kriteria 3 - Web Server dapat mengubah catatan
+
+//3.1//
+req ->
+method: PUT,
+path: /notes/{id},
+{
+  "title":"Judul Catatan Revisi",
+  "tags":[
+    "Tag 1",
+    "Tag 2"
+  ],
+  "body":"Konten catatan"
+}
+
+res ->
+- berhasil,
+code: 200 ok,
+{
+  "status": "success",
+  "message": "Catatan berhasil diperbaharui"
+}
+- gagal,
+code: 404 not found,
+{
+  "status": "fail",
+  "message": "Gagal memperbarui catatan. Id catatan tidak ditemukan"
+}
+
+Kriteria 4 - Web Server dapat menghapus catatan
+
+//4.1//
+req ->
+method: DELETE,
+path: /notes/{id},
+
+res ->
+- berhasil,
+code 200 ok,
+{
+  "status": "success",
+  "message": "Catatan berhasil dihapus"
+}
+- gagal,
+code 404 not found,
+{
+  "status": "fail",
+  "message": "Catatan gagal dihapus. Id catatan tidak ditemukan"
+}
