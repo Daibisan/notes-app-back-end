@@ -86,11 +86,12 @@ const updateNoteHandler = (req, h) => {
     };
   }
 
-  h.code(404);
-  return {
+  const response = h.response({
     status: 'fail',
     message: 'Gagal memperbarui catatan. Id catatan tidak ditemukan'
-  };
+  });
+  response.code(404);
+  return response;
 };
 
 const deleteNoteHandler = (req, h) => {
@@ -104,12 +105,12 @@ const deleteNoteHandler = (req, h) => {
     };
   }
 
-  const request = h.request({
+  const response = h.response({
     'status': 'fail',
     'message': 'Catatan gagal dihapus. Id catatan tidak ditemukan',
   });
-  request.code(404);
-  return request;
+  response.code(404);
+  return response;
 };
 
 // const arr = [{ id: 1 }, 5];
