@@ -49,7 +49,7 @@ const getNoteHandler = (req, h) => {
   const { noteId } = req.params;
   const note = notes.filter((note) => note.id == noteId)[0];
 
-  if (note !== 'undefined') {
+  if (note !== undefined) {
     return {
       status: 'success',
       data: {
